@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot name="sampling_robot">
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.05"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.6 0.6 0.6 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- ================= LINK 1 ================= -->
+  <link name="link_1">
+    <visual>
+      <geometry>
+        <cylinder length="0.15" radius="0.02"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0.2 0.2 0.8 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Revolute Joint 1 -->
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="5" velocity="0.5"/>
+  </joint>
+
+  <!-- ================= LINK 2 ================= -->
+  <link name="link_2">
+    <visual>
+      <geometry>
+        <cylinder length="0.12" radius="0.015"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0.2 0.7 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joint 2 (Fixed for simplicity) -->
+  <joint name="joint_2" type="fixed">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.15" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- ================= PRISMATIC LINK ================= -->
+  <link name="tool_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.01"/>
+      </geometry>
+      <material name="red">
+        <color rgba="0.8 0.2 0.2 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Prismatic Joint (Insertion) -->
+  <joint name="joint_3" type="prismatic">
+    <parent link="link_2"/>
+    <child link="tool_link"/>
+    <origin xyz="0 0 0.12" rpy="0 0 0"/>
+    <axis xyz="1 1 0"/>
+    <limit lower="0.0" upper="0.06" effort="5" velocity="0.02"/>
+  </joint>
+
+</robot>
